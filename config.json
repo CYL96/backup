@@ -1,0 +1,26 @@
+{
+  "thread_num": 10,
+  "backup_path": [
+    {
+      "name": "工作文件",
+      "from":"D:\\工作\\",
+      "to": "Z:\\backup\\工作\\",
+      "ignore_path": [
+      ],
+      "ignore_file": [
+      ]
+    }, {
+      "name": "代码文件",
+      "from":"D:\\work\\",
+      "to": "Z:\\backup\\",
+      "ignore_path": [
+        "*.git",
+        "*.idea"
+      ],
+      "ignore_file": [
+        "*.log",
+        "*.exe"
+      ]
+    }
+  ]
+}

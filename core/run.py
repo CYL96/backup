@@ -1,5 +1,6 @@
 import logging
 import os
+import select
 import shutil
 import sys
 import _thread
@@ -32,11 +33,11 @@ def run():
     logging.info('线程启动完成')
     time.sleep(1)
     logging.info('启动备份')
+
     for path in config.my_config.backup_path:
         # 开始递归文件和子文件
         from_f = file.get_all_file_dict(path.from_path, path.ignore_file, path.ignore_path)
         tp_f = file.get_all_file_dict(path.to_path, path.ignore_file, path.ignore_path)
-
         # print('\n')
         # time.sleep(0.5)
         logging.info(f'备份配置:{path.name}  文件数：{len(from_f)}')
@@ -63,3 +64,6 @@ def run():
     print('\n')
     time.sleep(1)
     logging.info("全部完成")
+    # 处理结束
+    from core import log
+    log.close_file_log()

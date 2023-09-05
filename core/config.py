@@ -36,9 +36,11 @@ class MyPathInfo:
 class MyConfig:
     backup_path: list[MyPathInfo] = []
 
-    def __init__(self, thread_num: int = 4):
+    def __init__(self, file_log: bool = False, only_file_modify: bool = False, thread_num: int = 4):
         self.backup_path = []
+        self.file_log = file_log
         self.thread_num = thread_num
+        self.only_file_modify = only_file_modify
         return
 
     def add_path_by_dict(self, data: dict):
@@ -84,11 +86,25 @@ class MyConfig:
 my_config = MyConfig()
 
 
+def need_file_log() -> bool:
+    return my_config.file_log
+
+
+def is_only_file_modify() -> bool:
+    return my_config.only_file_modify
+
+
 def readconfig(path: str):
     # 打开JSON文件并读取数据
     with open(path, 'r', encoding='utf-8') as file:
         config_data = json.load(file)
     global my_config
+    if 'file_log' in config_data:
+        my_config.file_log = config_data['file_log']
+
+    if 'file_log_only_modify' in config_data:
+        my_config.only_file_modify = config_data['file_log_only_modify']
+
     # 判断是否有错误
     logging.info("初始化备份配置")
     if 'backup_path' in config_data:
@@ -104,6 +120,7 @@ def readconfig(path: str):
             my_config.add_path_by_dict(e)
     else:
         raise ValueError("未指定备份配置")
+
     logging.info("初始化线程")
     if 'thread_num' in config_data:
         # print(config_data['thread_num'])

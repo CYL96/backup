@@ -1,3 +1,5 @@
 __pycache__
 .idea
 /venv
+config.json.skip
+log/file_log.txt

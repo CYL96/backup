@@ -34,7 +34,7 @@ def init_log():
     if config.need_file_log():
         common.mkdir('log')
         global _file_log
-        _file_log = open('log/file_log.txt', 'w', encoding='utf-8')
+        _file_log = open('log/file_log.txt', 'a', encoding='utf-8')
     return
 
 
